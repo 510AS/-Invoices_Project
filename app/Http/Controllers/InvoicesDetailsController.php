@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\invoice;
+use App\Models\invoice_attachments;
 use App\Models\invoices_details;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InvoicesDetailsController extends Controller
 {
@@ -44,9 +47,13 @@ class InvoicesDetailsController extends Controller
      * @param  \App\Models\invoices_details  $invoices_details
      * @return \Illuminate\Http\Response
      */
-    public function show(invoices_details $invoices_details)
+    public function show($id)
     {
-        //
+        $invoices = invoice::where('id',$id)->first();
+        $details  = invoices_Details::where('id_Invoice',$id)->get();
+        $attachments  = invoice_attachments::where('invoice_id',$id)->get();
+
+        return view('invoices.details_invoice',compact('invoices','details','attachments'));
     }
 
     /**
@@ -55,9 +62,10 @@ class InvoicesDetailsController extends Controller
      * @param  \App\Models\invoices_details  $invoices_details
      * @return \Illuminate\Http\Response
      */
-    public function edit(invoices_details $invoices_details)
+    public function edit($id)
     {
-        //
+
+
     }
 
     /**
@@ -78,8 +86,49 @@ class InvoicesDetailsController extends Controller
      * @param  \App\Models\invoices_details  $invoices_details
      * @return \Illuminate\Http\Response
      */
-    public function destroy(invoices_details $invoices_details)
+    public function destroy(Request $request)
     {
-        //
+        $invoices = invoice_attachments::findOrFail($request->id_file);
+
+        if ($request->type === 'pdf') {
+            $path = $request->invoice_number.'/PDF';
+
+        }else{
+            $path = $request->invoice_number.'/Image';
+        }
+        Storage::disk('public_uploads')->delete($path.'/'.$request->file_store_name);
+
+        $invoices->delete();
+
+        session()->flash('delete', 'تم حذف المرفق بنجاح');
+        return back();
+    }
+
+    public function get_file($invoice_number,$file_store_name,$type)
+
+    {
+        if ($type === 'pdf') {
+                $path = $invoice_number.'/PDF';
+
+            }else{
+                $path = $invoice_number.'/Image';
+            }
+        $contents= Storage::disk('public_uploads')->getDriver()->getAdapter()->applyPathPrefix($path.'/'.$file_store_name);
+        return response()->download( $contents);
+    }
+
+
+
+    public function open_file($invoice_number,$file_store_name,$type)
+
+    {
+        if ($type === 'pdf') {
+                $path =  $invoice_number.'/PDF';
+
+            }else{
+                $path =  $invoice_number.'/Image';
+            }
+        $files = Storage::disk('public_uploads')->getDriver()->getAdapter()->applyPathPrefix($path.'/'.$file_store_name);
+        return response()->file($files);
     }
 }
