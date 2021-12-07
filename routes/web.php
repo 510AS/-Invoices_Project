@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckStatus;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,42 +24,100 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware([CheckStatus::class])->group(function(){
 
-Route::resource('invoices','InvoiceController' );
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('sections', 'SectionsController');
+    Route::resource('invoices','InvoiceController' );
 
-Route::resource('products', 'ProductsController');
+    Route::resource('sections', 'SectionsController');
 
-Route::resource('InvoiceAttachments', 'InvoiceAttachmentsController');
+    Route::resource('products', 'ProductsController');
 
-Route::get('/section/{id}', 'InvoiceController@getproducts');
+    Route::resource('InvoiceAttachments', 'InvoiceAttachmentsController');
 
-Route::get('/InvoicesDetails/{id}', 'InvoicesDetailsController@show');
+    Route::get('/section/{id}', 'InvoiceController@getproducts');
 
-Route::get('download/{invoice_number}/{file_name}/{type}', 'InvoicesDetailsController@get_file');
+    Route::get('/InvoicesDetails/{id}', 'InvoicesDetailsController@show');
 
-Route::get('View_file/{invoice_number}/{file_name}/{type}', 'InvoicesDetailsController@open_file');
+    Route::get('download/{invoice_number}/{file_name}/{type}', 'InvoicesDetailsController@get_file');
 
-Route::post('delete_file', 'InvoicesDetailsController@destroy')->name('delete_file');
+    Route::get('View_file/{invoice_number}/{file_name}/{type}', 'InvoicesDetailsController@open_file');
 
-Route::get('/edit_invoice/{id}', 'InvoiceController@edit');
+    Route::post('delete_file', 'InvoicesDetailsController@destroy')->name('delete_file');
 
-Route::get('/Status_show/{id}', 'InvoiceController@show')->name('Status_show');
+    Route::get('/edit_invoice/{id}', 'InvoiceController@edit');
 
-Route::post('/Status_Update/{id}', 'InvoiceController@Status_Update')->name('Status_Update');
+    Route::get('/Status_show/{id}', 'InvoiceController@show')->name('Status_show');
 
-Route::resource('Archive', 'InvoiceAchiveController');
+    Route::post('/Status_Update/{id}', 'InvoiceController@Status_Update')->name('Status_Update');
 
-Route::get('Invoice_Paid','InvoiceController@Invoice_Paid');
+    Route::resource('Archive', 'InvoiceAchiveController');
 
-Route::get('Invoice_UnPaid','InvoiceController@Invoice_UnPaid');
+    Route::get('Invoice_Paid','InvoiceController@Invoice_Paid');
 
-Route::get('Invoice_Partial','InvoiceController@Invoice_Partial');
+    Route::get('Invoice_UnPaid','InvoiceController@Invoice_UnPaid');
 
-Route::get('Print_invoice/{id}','InvoiceController@Print_invoice');
+    Route::get('Invoice_Partial','InvoiceController@Invoice_Partial');
 
-Route::get('export_invoices', 'InvoiceController@export');
+    Route::get('Print_invoice/{id}','InvoiceController@Print_invoice');
 
-Route::get('/{page}', 'AdminController@index');
+    Route::get('export_invoices', 'InvoiceController@export');
+
+    Route::group(['middleware' => ['auth']], function() {
+        Route::resource('roles', RoleController::class);
+        Route::resource('users', UserController::class);
+
+    });
+
+    Route::get('/{page}', 'AdminController@index');
+
+ });
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::resource('invoices','InvoiceController' );
+
+// Route::resource('sections', 'SectionsController');
+
+// Route::resource('products', 'ProductsController');
+
+// Route::resource('InvoiceAttachments', 'InvoiceAttachmentsController');
+
+// Route::get('/section/{id}', 'InvoiceController@getproducts');
+
+// Route::get('/InvoicesDetails/{id}', 'InvoicesDetailsController@show');
+
+// Route::get('download/{invoice_number}/{file_name}/{type}', 'InvoicesDetailsController@get_file');
+
+// Route::get('View_file/{invoice_number}/{file_name}/{type}', 'InvoicesDetailsController@open_file');
+
+// Route::post('delete_file', 'InvoicesDetailsController@destroy')->name('delete_file');
+
+// Route::get('/edit_invoice/{id}', 'InvoiceController@edit');
+
+// Route::get('/Status_show/{id}', 'InvoiceController@show')->name('Status_show');
+
+// Route::post('/Status_Update/{id}', 'InvoiceController@Status_Update')->name('Status_Update');
+
+// Route::resource('Archive', 'InvoiceAchiveController');
+
+// Route::get('Invoice_Paid','InvoiceController@Invoice_Paid');
+
+// Route::get('Invoice_UnPaid','InvoiceController@Invoice_UnPaid');
+
+// Route::get('Invoice_Partial','InvoiceController@Invoice_Partial');
+
+// Route::get('Print_invoice/{id}','InvoiceController@Print_invoice');
+
+// Route::get('export_invoices', 'InvoiceController@export');
+
+// Route::group(['middleware' => ['auth']], function() {
+//     Route::resource('roles', RoleController::class);
+//     Route::resource('users', UserController::class);
+
+// });
+
+// Route::get('/{page}', 'AdminController@index');
+
+

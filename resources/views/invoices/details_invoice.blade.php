@@ -202,7 +202,7 @@
                                         <div class="tab-pane" id="tab6">
                                             <!--المرفقات-->
                                             <div class="card card-statistics">
-                                                {{-- @can('اضافة مرفق') --}}
+                                                @can('اضافة مرفق')
                                                     <div class="card-body">
                                                         <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
                                                         <h5 class="card-title">اضافة مرفقات</h5>
@@ -223,7 +223,7 @@
                                                                 name="uploadedFile">تاكيد</button>
                                                         </form>
                                                     </div>
-                                                {{-- @endcan --}}
+                                                @endcan
                                                 <br>
 
                                                 <div class="table-responsive mt-15">
@@ -260,14 +260,15 @@
                                                                                 class="fas fa-download"></i>&nbsp;
                                                                             تحميل</a>
 
-                                                                        {{-- @can('حذف المرفق') --}}
+                                                                        @can('حذف المرفق')
                                                                             <button class="btn btn-outline-danger btn-sm"
                                                                                 data-toggle="modal"
                                                                                 data-file_store_name="{{ $attachment->file_store_name }}"
                                                                                 data-invoice_number="{{ $attachment->invoice_number }}"
                                                                                 data-id_file="{{ $attachment->id }}"
+                                                                                data-type="{{ $attachment->type }}"
                                                                                 data-target="#delete_file">حذف</button>
-                                                                        {{-- @endcan --}}
+                                                                        @endcan
 
                                                                     </td>
                                                                 </tr>
@@ -313,8 +314,9 @@
                         </p>
 
                         <input type="hidden" name="id_file" id="id_file" value="">
-                        <input type="text" name="file_store_name" id="file_store_name" value="">
+                        <input type="hidden" name="file_store_name" id="file_store_name" value="">
                         <input type="hidden" name="invoice_number" id="invoice_number" value="">
+                        <input type="hidden" name="type" id="type" value="">
 
                     </div>
                     <div class="modal-footer">
@@ -354,11 +356,13 @@
             var id_file = button.data('id_file')
             var file_store_name = button.data('file_store_name')
             var invoice_number = button.data('invoice_number')
+            var type = button.data('type')
             var modal = $(this)
 
             modal.find('.modal-body #id_file').val(id_file);
             modal.find('.modal-body #file_store_name').val(file_store_name);
             modal.find('.modal-body #invoice_number').val(invoice_number);
+            modal.find('.modal-body #type').val(type);
         })
 
     </script>
