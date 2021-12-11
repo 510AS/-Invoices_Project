@@ -167,6 +167,8 @@ return [
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
         /*
          * Application Service Providers...
          */

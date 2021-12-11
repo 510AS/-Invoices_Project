@@ -6,10 +6,13 @@ use App\Models\invoice;
 use App\Models\invoice_attachments;
 use App\Models\invoices_details;
 use App\Models\section;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
@@ -100,7 +103,24 @@ class InvoiceController extends Controller
             }
             $request->pic->move(public_path('Attachments/' . $invoice_number), $imageName);
         };
-        return \redirect('invoices');
+         // $user = User::first();
+           // Notification::send($user, new AddInvoice($invoice_id));
+
+        //    $user = User::where('roles_name',['Admin','Owner'])->get();
+           $user = User::get();
+           $invoices = invoice::latest()->first();
+           Notification::send($user, new \App\Notifications\AddInvoice($invoices));
+
+
+
+
+
+
+
+          // event(new MyEventClass('hello world'));
+
+           session()->flash('Add', 'تم اضافة الفاتورة بنجاح');
+           return back();
 
     }
 
@@ -269,6 +289,45 @@ public function Print_invoice($id)
 {
     $invoices = invoice::where('id', $id)->first();
     return view('invoices.Print_invoice',compact('invoices'));
+}
+
+// public function export()
+// {
+
+//     return Excel::download(new InvoicesExport, 'invoices.xlsx');
+
+// }
+
+
+public function MarkAsRead_all(Request $request)
+{
+
+    $userUnreadNotification= auth()->user()->unreadNotifications;
+
+    if($userUnreadNotification) {
+        $userUnreadNotification->markAsRead();
+        return back();
+    }
+
+
+}
+
+
+public function unreadNotifications_count()
+
+{
+    return auth()->user()->unreadNotifications->count();
+}
+
+public function unreadNotifications()
+
+{
+    foreach (auth()->user()->unreadNotifications as $notification){
+
+return $notification->data['title'];
+
+    }
+
 }
 
 }
