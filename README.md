@@ -1,66 +1,106 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# 🧾 Invoices Management System
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-8-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" />
 </p>
 
-## About Laravel
+A comprehensive invoice management application built with **Laravel**, featuring real-time notifications, role-based access, status tracking, and Docker containerization.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🧾 Invoice Management
+- **Full CRUD** — Create, read, update, delete invoices
+- **Status Tracking** — Paid, unpaid, partially paid with visual indicators
+- **Invoice Details** — Client info, line items, totals, due dates
+- **Search & Filter** — Find invoices by date, status, client, or amount
 
-## Learning Laravel
+### 🔔 Notifications
+- **Real-Time Notifications** — Laravel notification system
+- **Database Notifications** — Unread notification badges in dashboard
+- **Email Notifications** — Auto-triggered on invoice events
+- **Notification Center** — View and manage all notifications
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔐 Access Control
+- **Role-Based Access** — Admin and staff permission levels
+- **Protected Actions** — Only authorized users can modify invoices
+- **User Management** — Admin can manage staff accounts
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🐳 Docker Support
+- **Docker Compose** — One-command development environment
+- **Containerized** — PHP, MySQL, Nginx in containers
+- **Portable** — Run anywhere with Docker
 
-## Laravel Sponsors
+### 📊 Dashboard
+- **Overview Statistics** — Total invoices, paid/unpaid counts, revenue
+- **Recent Activity** — Latest invoice actions
+- **Quick Actions** — Create invoice shortcuts
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+---
 
-### Premium Partners
+## 🛠 Tech Stack
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+| Category | Technology |
+|----------|-----------|
+| **Framework** | Laravel 8 |
+| **Frontend** | Blade Templates + Bootstrap |
+| **Database** | MySQL |
+| **Notifications** | Laravel Notifications (DB + Email) |
+| **Containerization** | Docker + Docker Compose |
+| **Build Tool** | Laravel Mix |
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 Getting Started
 
-## Code of Conduct
+### Standard Setup
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+git clone https://github.com/510AS/-Invoices_Project.git
+cd -Invoices_Project
 
-## Security Vulnerabilities
+composer install
+npm install && npm run dev
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+```
 
-## License
+### Docker Setup
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+docker-compose up -d
+```
+
+---
+
+## 📁 Project Structure
+
+```
+app/
+├── Http/Controllers/    # Invoice, Dashboard, User controllers
+├── Models/              # Invoice, Payment, User
+├── Notifications/       # InvoiceCreated, PaymentReceived, etc.
+resources/
+├── views/
+│   ├── invoices/        # Invoice CRUD views
+│   ├── dashboard/       # Admin dashboard
+│   └── layouts/         # Base templates
+routes/
+├── web.php              # Web routes
+database/
+├── migrations/          # Invoice, notification tables
+docker-compose.yml       # Container orchestration
+```
+
+---
+
+## 📄 License
+
+This project is for educational and portfolio purposes.
